@@ -13,6 +13,8 @@ async function bootstrap() {
     },
   });
 
+  (app as any).set('trust proxy', 1);
+
   app.use(
     session({
       name: 'url.sid',
