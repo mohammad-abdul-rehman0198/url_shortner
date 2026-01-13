@@ -13,7 +13,7 @@ export class Url {
   @Prop({ required: true, unique: true })
   short: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true})
   sessionId: string;
 }
 
