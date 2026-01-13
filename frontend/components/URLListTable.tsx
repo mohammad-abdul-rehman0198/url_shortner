@@ -6,7 +6,6 @@ import Loader from "@/components/ui/loaders/Loader";
 import { getAllUrl } from "@/app/actions/url/getAllUrl";
 import { ShortenedUrl } from "@/utils/interface/ShortenedURL";
 
-
 interface URLListTableProps {
   urlList: ShortenedUrl[];
   setUrlList: (urlList: ShortenedUrl[]) => void;
@@ -20,8 +19,7 @@ const URLListTable = ({
   copiedUrl,
   handleCopy,
 }: URLListTableProps) => {
- const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getUrlList = async () => {
@@ -121,15 +119,16 @@ const URLListTable = ({
           </table>
         </div>
       )}
-      {urlList.length === 0 && !isLoading && (
-        <div className="w-full flex items-center justify-center">
-          <p className="text-gray-500">No URLs found</p>
-        </div>
-      )}
 
       {isLoading && (
         <div className="w-full flex items-center justify-center">
           <Loader size="sm" variant="primary" />
+        </div>
+      )}
+
+      {urlList.length === 0 && !isLoading && (
+        <div className="w-full flex items-center justify-center">
+          <p className="text-gray-500">No URLs found</p>
         </div>
       )}
     </>
