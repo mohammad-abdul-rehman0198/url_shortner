@@ -1,10 +1,11 @@
-import { useEffect} from "react";
+import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
-import { getAllUrl } from "@/app/actions/url/getAllUrl";
 import Button from "@/components/ui/buttons/Button";
+import Loader from "@/components/ui/loaders/Loader";
+import { getAllUrl } from "@/app/actions/url/getAllUrl";
 import { ShortenedUrl } from "@/utils/interface/ShortenedURL";
 
-import { toast, ToastContainer } from "react-toastify";
 
 interface URLListTableProps {
   urlList: ShortenedUrl[];
@@ -19,11 +20,14 @@ const URLListTable = ({
   copiedUrl,
   handleCopy,
 }: URLListTableProps) => {
-  
+ const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     const getUrlList = async () => {
+      setIsLoading(true);
       const response = await getAllUrl();
+      setIsLoading(false);
       if (response.success) {
         setUrlList(response.urls);
       } else {
@@ -31,16 +35,18 @@ const URLListTable = ({
       }
     };
     getUrlList();
- // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
       <ToastContainer />
 
-      {urlList.length > 0 && (
+      {urlList.length > 0 && !isLoading && (
         <div className="w-full overflow-x-auto">
           <table className="w-full border-collapse mb-8">
-            <caption className="text-lg font-bold text-gray-700 mb-4 w-full text-left">Recent URLs</caption>
+            <caption className="text-lg font-bold text-gray-700 mb-4 w-full text-left">
+              Recent URLs
+            </caption>
             <thead>
               <tr className="bg-gray-100">
                 <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
@@ -64,13 +70,18 @@ const URLListTable = ({
                     <div className="flex items-center gap-2">
                       <span className="break-all">{`${process.env.NEXT_PUBLIC_API_URL}/${url.short}`}</span>
                       <Button
-                        onClick={() => handleCopy(`${process.env.NEXT_PUBLIC_API_URL}/${url.short}`)}
+                        onClick={() =>
+                          handleCopy(
+                            `${process.env.NEXT_PUBLIC_API_URL}/${url.short}`
+                          )
+                        }
                         className="shrink-0 p-1.5 hover:bg-gray-200 rounded outline-none transition-colors cursor-pointer"
                         title="Copy to clipboard"
                         variant="ghost"
                         size="sm"
                       >
-                        {copiedUrl === `${process.env.NEXT_PUBLIC_API_URL}/${url.short}` ? (
+                        {copiedUrl ===
+                        `${process.env.NEXT_PUBLIC_API_URL}/${url.short}` ? (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -110,9 +121,15 @@ const URLListTable = ({
           </table>
         </div>
       )}
-      {urlList.length === 0 && (
+      {urlList.length === 0 && !isLoading && (
         <div className="w-full flex items-center justify-center">
           <p className="text-gray-500">No URLs found</p>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="w-full flex items-center justify-center">
+          <Loader size="sm" variant="primary" />
         </div>
       )}
     </>

@@ -8,9 +8,9 @@ import Input from "@/components/ui/inputs/Input";
 import { UrlData } from "@/utils/interface/UrlData";
 import Button from "@/components/ui/buttons/Button";
 import { ShortenedUrl } from "@/utils/interface/ShortenedURL";
+import { createShortUrl } from "@/app/actions/url/createShortUrl";
 import { generateShortUrl } from "@/utils/actions/GenrateShortURL";
 import { inputValidation } from "@/utils/validations/InputValidation";
-import { createShortUrl } from "@/app/actions/url/createShortUrl";
 
 interface ShortURLProps {
   urlList: ShortenedUrl[];
