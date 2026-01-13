@@ -120,13 +120,15 @@ const URLListTable = ({
         </div>
       )}
 
-      {urlList.length === 0 && !isLoading ? (
+      {isLoading && (
+        <div className="w-full flex items-center justify-center">
+          <Loader size="sm" variant="primary" />
+        </div>
+      )}
+
+      {urlList.length === 0 && !isLoading && (
         <div className="w-full flex items-center justify-center">
           <p className="text-gray-500">No URLs found</p>
-        </div>
-      ) : (
-        <div className="w-full flex items-center justify-center">
-          <Loader size="md" variant="primary" />
         </div>
       )}
     </>
