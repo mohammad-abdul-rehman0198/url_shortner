@@ -122,7 +122,7 @@ const URLListTable = ({
 
       {isLoading && (
         <div className="w-full flex items-center justify-center">
-          <Loader size="sm" variant="primary" />
+          <Loader size="md" variant="primary" />
         </div>
       )}
 
