@@ -1,10 +1,9 @@
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import session from 'express-session';
-import * as crypto from 'crypto';
 
 import { AppModule } from '@/src/app.module';
-import MongoStore from 'connect-mongo';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -27,7 +26,8 @@ async function bootstrap() {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, 
         httpOnly: true,
-        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'none',
       },
     }),
   );
