@@ -39,7 +39,7 @@ const URLListTable = ({
 
       {urlList.length > 0 && (
         <div className="w-full overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse mb-8">
             <caption className="text-lg font-bold text-gray-700 mb-4 w-full text-left">Recent URLs</caption>
             <thead>
               <tr className="bg-gray-100">
